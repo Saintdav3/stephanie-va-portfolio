@@ -1,0 +1,17 @@
+# Keep private or unused files off the public site.
+
+# Original, uncropped screenshots (contain personal data such as bank alerts).
+# The site uses the cropped/blurred copies in Assets/images/work/.
+Assets/images/Screenshot*
+
+# Full-size stock photo; the site uses the optimised workspace*.jpg copies.
+Assets/images/pexels-*
+
+# Unused vendor files.
+Assets/css/bootstrap.min.css
+Assets/Js/bootstrap.bundle.min.js
+Assets/vendor
+
+# OS / editor clutter.
+.DS_Store
+**/.DS_Store
