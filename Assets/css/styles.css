@@ -562,14 +562,24 @@ textarea {
   line-height: 1;
 }
 
-.brand__role {
-  padding-left: var(--space-3);
-  border-left: 1px solid var(--color-border-strong);
+.brand__name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand__by {
+  margin-top: 2px;
   color: var(--color-text-muted);
-  font-weight: 500;
-  font-size: var(--text-sm);
   font-family: var(--font-body);
-  letter-spacing: 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.site-footer .brand__by {
+  color: var(--color-text-inverse-muted);
 }
 
 .nav__menu {
@@ -670,10 +680,6 @@ textarea {
 }
 
 @media (max-width: 860px) {
-  .brand__role {
-    display: none;
-  }
-
   .nav__toggle {
     display: inline-flex;
   }
@@ -720,13 +726,6 @@ textarea {
 
   .nav__menu .btn {
     width: 100%;
-  }
-}
-
-/* Six nav items need the room: drop the role tag before it wraps. */
-@media (max-width: 1040px) {
-  .brand__role {
-    display: none;
   }
 }
 
