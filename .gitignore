@@ -15,3 +15,6 @@ Assets/vendor
 # OS / editor clutter.
 .DS_Store
 **/.DS_Store
+
+# Full-size original photos; the site uses optimised copies.
+Assets/images/IMG_*

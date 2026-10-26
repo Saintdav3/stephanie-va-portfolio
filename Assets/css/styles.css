@@ -834,40 +834,6 @@ textarea {
   object-position: center top;
 }
 
-.portrait__placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  height: 100%;
-  padding: var(--space-8);
-  border: 1px dashed var(--color-border-strong);
-  border-radius: inherit;
-  background:
-    radial-gradient(circle at 50% 38%, var(--color-surface) 0, transparent 60%),
-    linear-gradient(180deg, var(--color-surface-muted), var(--color-secondary-soft));
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
-.portrait__placeholder svg {
-  width: 96px;
-  height: 96px;
-  color: var(--color-secondary);
-}
-
-.portrait__placeholder strong {
-  color: var(--color-text-primary);
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  font-weight: 500;
-}
-
-.portrait__placeholder span {
-  font-size: var(--text-sm);
-}
-
 @media (max-width: 960px) {
   .hero__grid {
     grid-template-columns: 1fr;
