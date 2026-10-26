@@ -732,6 +732,13 @@ textarea {
   }
 }
 
+/* Six nav items need the room: drop the role tag before it wraps. */
+@media (max-width: 1040px) {
+  .brand__role {
+    display: none;
+  }
+}
+
 /* Hero -------------------------------------------------------------------- */
 .hero {
   position: relative;
