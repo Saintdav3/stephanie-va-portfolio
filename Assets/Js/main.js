@@ -214,7 +214,7 @@
       var payload = {
         name: name,
         email: fields.email.value.trim(),
-        "area of support": service || "Not sure yet",
+        "needs help with": service || "Not sure yet",
         message: fields.message.value.trim(),
         _subject: "Portfolio enquiry from " + name + (service ? " — " + service : ""),
         _template: "table",
