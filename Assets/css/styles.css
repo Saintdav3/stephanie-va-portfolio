@@ -274,15 +274,6 @@ textarea {
   background: var(--gradient-brand);
 }
 
-/* Serif italic emphasis inside headings */
-.accent {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--color-primary);
-}
-
 /* Buttons */
 .btn {
   --btn-bg: transparent;
@@ -774,10 +765,6 @@ textarea {
   font-size: var(--text-display);
   font-weight: 500;
   letter-spacing: -0.02em;
-}
-
-.hero h1 .accent {
-  font-size: 1em;
 }
 
 .hero__lead {
@@ -1419,10 +1406,6 @@ textarea {
 
 .contact .section-title {
   color: var(--color-text-inverse);
-}
-
-.contact .section-title .accent {
-  color: var(--color-text-inverse-primary);
 }
 
 .contact__intro > p:not(.eyebrow) {
