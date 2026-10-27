@@ -4,16 +4,8 @@
 (function () {
   "use strict";
 
-  // Built at runtime so the address never appears as plain text for scrapers.
-  var CONTACT_EMAIL = ["stephaniechuks05", "gmail.com"].join("@");
+  var CONTACT_EMAIL = "stephaniechuks05@gmail.com";
   var FORM_ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
-
-  /* "Email me directly" button: fill in the mailto link ------------------ */
-  function initEmailLink() {
-    document.querySelectorAll("[data-email-link]").forEach(function (link) {
-      link.href = "mailto:" + CONTACT_EMAIL + "?subject=Virtual%20assistance%20enquiry";
-    });
-  }
 
   /* Header shadow once the page has scrolled ----------------------------- */
   function initHeader() {
@@ -259,7 +251,6 @@
     });
   }
 
-  initEmailLink();
   initHeader();
   initNav();
   initActiveLinks();
