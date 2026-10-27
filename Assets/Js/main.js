@@ -100,6 +100,85 @@
     });
   }
 
+  /* Gentle fade-and-rise as content scrolls into view -------------------- */
+  // Only hides content once we know it can be revealed again: skipped when
+  // the visitor prefers reduced motion or the browser lacks the observer.
+  function initReveal() {
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+    var selectors = [
+      ".hero__copy > *",
+      ".hero__visual",
+      ".section-head",
+      ".services__intro",
+      ".service",
+      ".about__body",
+      ".facts",
+      ".case__media",
+      ".case__body",
+      ".sample",
+      ".cred",
+      ".education",
+      ".work__note",
+      ".contact__intro",
+      ".form"
+    ];
+    var items = document.querySelectorAll(selectors.join(","));
+    if (!items.length) return;
+
+    // Siblings that appear together (a row of cards, the hero lines) arrive
+    // one after another rather than all at once.
+    var perParent = new Map();
+    items.forEach(function (el) {
+      var index = perParent.get(el.parentElement) || 0;
+      perParent.set(el.parentElement, index + 1);
+      el.style.setProperty("--reveal-delay", Math.min(index, 4) * 90 + "ms");
+      el.classList.add("reveal");
+    });
+    document.documentElement.classList.add("has-reveal");
+
+    var pending = new Set(items);
+    var show = function (el) {
+      if (!pending.has(el)) return;
+      pending.delete(el);
+      el.classList.add("is-visible");
+      observer.unobserve(el);
+    };
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) show(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+    );
+    items.forEach(function (el) {
+      observer.observe(el);
+    });
+
+    // Safety net for fast flick-scrolling or jumping to a section: anything
+    // that is on screen or already scrolled past is revealed, never skipped.
+    var ticking = false;
+    var catchUp = function () {
+      ticking = false;
+      var limit = window.innerHeight * 0.95;
+      pending.forEach(function (el) {
+        if (el.getBoundingClientRect().top < limit) show(el);
+      });
+      if (!pending.size) window.removeEventListener("scroll", onScroll);
+    };
+    var onScroll = function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(catchUp);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("load", catchUp);
+  }
+
   /* Work-sample lightbox ------------------------------------------------- */
   function initLightbox() {
     var dialog = document.getElementById("lightbox");
@@ -263,6 +342,7 @@
   initHeader();
   initNav();
   initActiveLinks();
+  initReveal();
   initLightbox();
   initForm();
 })();
