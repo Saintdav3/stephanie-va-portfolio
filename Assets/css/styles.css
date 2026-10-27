@@ -1687,6 +1687,221 @@ button {
   overflow: hidden;
 }
 
+/* Polished effects ---------------------------------------------------------- */
+:root {
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Reading progress line along the top of the window (created by main.js). */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* Back-to-top button (created by main.js). */
+.to-top {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: rgba(255, 253, 250, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity var(--transition-base), transform var(--transition-base),
+    visibility 0s linear 240ms, background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.to-top.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity var(--transition-base), transform var(--transition-base), visibility 0s,
+    background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.to-top:hover {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.to-top:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus), var(--shadow-md);
+}
+
+.to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Menu links: underline slides in on hover; the active link keeps it. */
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out-soft);
+}
+
+.nav__links a:hover::after,
+.nav__links a.is-active::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 860px) {
+  .nav__links a::after {
+    display: none;
+  }
+}
+
+/* Brown buttons: a soft band of light sweeps across on hover. */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 253, 250, 0.28) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 700ms var(--ease-out-soft);
+}
+
+.btn--primary:hover::after {
+  transform: translateX(120%);
+}
+
+/* Section labels: the short line draws itself in as the section appears. */
+.has-reveal .reveal.is-visible .eyebrow::before,
+.has-reveal .eyebrow.reveal.is-visible::before {
+  animation: line-draw 900ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 250ms) both;
+}
+
+@keyframes line-draw {
+  from {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* Stephanie's photo unveils top to bottom; its backing panel glides in. */
+.has-reveal .hero__visual.is-visible .portrait {
+  /* "backwards": hidden during the delay, but releases the clip afterwards
+     so the photo's drop shadow isn't cut off. */
+  animation: portrait-unveil 1200ms var(--ease-out-soft) 200ms backwards;
+}
+
+.has-reveal .hero__visual.is-visible::before {
+  animation: panel-in 1200ms var(--ease-out-soft) 100ms both;
+}
+
+@keyframes portrait-unveil {
+  from {
+    clip-path: inset(0 0 100% 0 round var(--radius-lg));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round var(--radius-lg));
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    translate: -18px 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.portrait img {
+  transition: transform 900ms var(--ease-out-soft);
+}
+
+.portrait:hover img {
+  transform: scale(1.03);
+}
+
+/* Services: hovering a row warms its title and nudges its number. */
+.service h3 {
+  transition: color var(--transition-base);
+}
+
+.service::before {
+  transition: translate 320ms var(--ease-out-soft), color var(--transition-base);
+}
+
+.service:hover h3 {
+  color: var(--color-primary);
+}
+
+.service:hover::before {
+  translate: 6px 0;
+  color: var(--color-primary-hover);
+}
+
+/* Certificate cards: gentle lift, with the certificate zooming slightly. */
+.cred {
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.cred:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.cred__thumb img {
+  transition: transform 700ms var(--ease-out-soft);
+}
+
+.cred:hover .cred__thumb img {
+  transform: scale(1.04);
+}
+
+@media (hover: none) {
+  .cred:hover,
+  .sample:hover {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1694,6 +1909,10 @@ button {
 
   .has-reveal .reveal:not(.is-visible) {
     opacity: 1;
+  }
+
+  .scroll-progress {
+    display: none;
   }
 
   *,

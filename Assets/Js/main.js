@@ -179,6 +179,49 @@
     window.addEventListener("load", catchUp);
   }
 
+  /* Reading progress line and back-to-top button ------------------------- */
+  function initScrollExtras() {
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var progress = document.createElement("div");
+    progress.className = "scroll-progress";
+    progress.setAttribute("aria-hidden", "true");
+    document.body.appendChild(progress);
+
+    var toTop = document.createElement("button");
+    toTop.type = "button";
+    toTop.className = "to-top";
+    toTop.setAttribute("aria-label", "Back to top");
+    toTop.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+    document.body.appendChild(toTop);
+
+    toTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      var brand = document.querySelector(".site-header .brand");
+      if (brand) brand.focus({ preventScroll: true });
+    });
+
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      progress.style.setProperty("--progress", ratio.toFixed(4));
+      toTop.classList.toggle("is-shown", window.scrollY > window.innerHeight * 0.8);
+    };
+    var onScroll = function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+  }
+
   /* Work-sample lightbox ------------------------------------------------- */
   function initLightbox() {
     var dialog = document.getElementById("lightbox");
@@ -343,6 +386,7 @@
   initNav();
   initActiveLinks();
   initReveal();
+  initScrollExtras();
   initLightbox();
   initForm();
 })();
