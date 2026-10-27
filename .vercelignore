@@ -18,3 +18,6 @@ Assets/vendor
 
 # Full-size original photos; the site uses optimised copies.
 Assets/images/IMG_*
+
+# Original logo export; the site uses the optimised logo*.png copies.
+Assets/images/4B8A1192-F74D-4944-A746-12780AA16453.PNG

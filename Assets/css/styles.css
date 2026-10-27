@@ -547,19 +547,10 @@ textarea {
   color: var(--color-text-primary);
 }
 
-.brand__mark {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--gradient-brand);
-  color: var(--color-text-inverse);
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.4rem;
-  line-height: 1;
+.brand__logo {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
 }
 
 .brand__name {
