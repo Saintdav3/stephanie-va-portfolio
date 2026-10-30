@@ -6,7 +6,9 @@
 
   // Built at runtime so the address never appears as plain text for scrapers.
   var CONTACT_EMAIL = ["claritydeskbystephanie", "gmail.com"].join("@");
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
+  var FORM_ENDPOINT = "https://api.web3forms.com/submit";
+  // Public Web3Forms key (safe in page code); delivers to the contact inbox.
+  var FORM_ACCESS_KEY = "069d55b4-083b-4961-9fec-5e114f3f5d7e";
 
   /* "Email me directly" button: fill in the mailto link ------------------ */
   function initEmailLink() {
@@ -256,7 +258,7 @@
     });
   }
 
-  /* Contact form: validate, then send to Stephanie's inbox via FormSubmit -- */
+  /* Contact form: validate, then send to Stephanie's inbox via Web3Forms -- */
   function initForm() {
     var form = document.getElementById("contact-form");
     if (!form) return;
@@ -342,13 +344,13 @@
       var name = fields.name.value.trim();
       var service = fields.service.value;
       var payload = {
+        access_key: FORM_ACCESS_KEY,
         name: name,
         email: fields.email.value.trim(),
         "needs help with": service || "Not sure yet",
         message: fields.message.value.trim(),
-        _subject: "Portfolio enquiry from " + name + (service ? " — " + service : ""),
-        _template: "table",
-        _honey: form.elements._honey.value
+        subject: "Portfolio enquiry from " + name + (service ? " — " + service : ""),
+        botcheck: form.elements.botcheck.value
       };
 
       setSending(true);
@@ -359,8 +361,7 @@
       })
         .then(function (response) {
           return response.json().then(function (data) {
-            // FormSubmit returns success as the string "true" or a boolean.
-            if (!response.ok || String(data.success) !== "true") {
+            if (!response.ok || data.success !== true) {
               throw new Error(data.message || "Request failed");
             }
           });

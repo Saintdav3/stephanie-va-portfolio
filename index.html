@@ -948,12 +948,12 @@
             </div>
           </div>
 
-          <!-- Delivered by FormSubmit (formsubmit.co). Without JavaScript the form posts
-             normally and FormSubmit shows its own confirmation page. -->
+          <!-- Delivered by Web3Forms (web3forms.com). Without JavaScript the form posts
+             normally and Web3Forms shows its own confirmation page. -->
           <form
             class="form"
             id="contact-form"
-            action="https://formsubmit.co/claritydeskbystephanie@gmail.com"
+            action="https://api.web3forms.com/submit"
             method="POST"
             novalidate
             aria-labelledby="form-title"
@@ -965,16 +965,20 @@
 
             <input
               type="hidden"
-              name="_subject"
+              name="access_key"
+              value="069d55b4-083b-4961-9fec-5e114f3f5d7e"
+            />
+            <input
+              type="hidden"
+              name="subject"
               value="New enquiry from your portfolio"
             />
-            <input type="hidden" name="_template" value="table" />
             <div class="visually-hidden" aria-hidden="true">
               <label for="honey">Leave this field empty</label>
               <input
                 id="honey"
                 type="text"
-                name="_honey"
+                name="botcheck"
                 tabindex="-1"
                 autocomplete="off"
               />
